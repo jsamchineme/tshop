@@ -1,0 +1,51 @@
+{
+  "name": "turing-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "8.11.4"
+  },
+  "private": true,
+  "scripts": {
+    "start": "node_modules/.bin/babel-node server --preset-env",
+    "start:dev": "nodemon --exec babel-node server --preset-env",
+    "migrate": "node_modules/.bin/babel-node server/database/migrate",
+    "seed": "node_modules/.bin/babel-node server/database/seed",
+    "test": "cross-env NODE_ENV=test npm run db:setup && cross-env NODE_ENV=test && PORT=9000 nyc mocha --timeout 20000 --exit server/tests --require @babel/register --require @babel/polyfill",
+    "db:setup": "npm run migrate && npm run seed",
+    "heroku-postbuild": "npm run db:setup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terisolve/turing-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/terisolve/turing-api/issues"
+  },
+  "homepage": "https://github.com/terisolve/turing-api#readme",
+  "devDependencies": {
+    "@babel/cli": "7.4.4",
+    "@babel/core": "7.4.5",
+    "@babel/node": "7.4.5",
+    "@babel/polyfill": "7.4.4",
+    "@babel/preset-env": "7.4.5",
+    "chai": "4.2.0",
+    "cross-env": "5.2.0",
+    "mocha": "6.1.4",
+    "nyc": "14.1.1",
+    "supertest": "4.0.2"
+  },
+  "dependencies": {
+    "dotenv": "8.0.0",
+    "express": "4.17.1",
+    "morgan": "1.9.1",
+    "mysql": "2.17.1",
+    "mysql-import": "2.0.2",
+    "mysql2": "1.6.5",
+    "sequelize": "5.8.7",
+    "winston": "3.2.1"
+  }
+}
