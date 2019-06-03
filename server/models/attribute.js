@@ -1,14 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
   const Attribute = sequelize.define('Attribute', {
-    name: DataTypes.STRING,
-    attribute_id: DataTypes.INTEGER
+    name: {
+      type:DataTypes.STRING,
+      allowNull: false,
+    },
+    attribute_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    }
   }, {
     timestamps: false,
     tableName: 'attribute'
   });
-  Attribute.associate = function(models) {
-    // associations can be defined here
-  };
 
   Attribute.removeAttribute('id')
   return Attribute;
