@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Attribute = sequelize.define('Attribute', {
     name: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     attribute_id: {
@@ -15,6 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'attribute'
   });
 
-  Attribute.removeAttribute('id')
+  Attribute.removeAttribute('id');
   return Attribute;
 };

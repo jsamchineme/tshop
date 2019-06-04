@@ -1,14 +1,15 @@
 import express from 'express';
 import morganLogger from 'morgan';
 import bodyParser from 'body-parser';
-import baseRouter from './api/routes';
-import logger from './services/logger';
+import baseRouter from 'src/api/router';
+import logger from 'src/services/logger';
+import errorHandler from 'src/services/errorHandler';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app = express();
 
-// log responses
 app.use(morganLogger('dev'));
 
 app.use(bodyParser.json());
@@ -27,6 +28,12 @@ app.use('*', (req, res) => {
     error: 'Route not found'
   });
 });
+
+// handling all the request and async errors
+app.use((err, req, res, next) => {
+  return errorHandler(err, req, res, next);
+});
+
 
 const port = process.env.PORT || 8003;
 

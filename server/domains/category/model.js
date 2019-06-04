@@ -21,10 +21,17 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'category'
   });
-  Category.associate = function(models) {
-    // associations can be defined here
+  Category.associate = function (models) {
+    Category.belongsToMany(models.Product, {
+      foreignKey: 'category_id',
+      otherKey: 'product_id',
+      timestamps: false,
+      through: 'product_category',
+      as: 'products'
+    });
   };
 
-  Category.removeAttribute('id')
+  Category.removeAttribute('id');
+
   return Category;
 };

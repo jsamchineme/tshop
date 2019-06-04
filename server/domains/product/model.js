@@ -1,3 +1,5 @@
+import { dbQueryOptions } from 'src/services/pagination';
+
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
     product_id: {
@@ -15,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     price: {
-      type: DataTypes.STRING,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     discounted_price: {
-      type: DataTypes.STRING,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     image: {
@@ -39,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'product'
   });
-  Product.associate = function(models) {
+  Product.associate = function (models) {
     Product.belongsToMany(models.Category, {
       foreignKey: 'product_id',
       otherKey: 'category_id',
@@ -54,8 +56,31 @@ module.exports = (sequelize, DataTypes) => {
       as: 'attribute_values',
       timestamps: false,
     });
+
+    Product.getAllProductsAndCount = async (paginationMeta) => {
+      const queryOptions = dbQueryOptions(paginationMeta);
+      const rows = await Product.findAll({
+        ...queryOptions
+      });
+      const count = await Product.count();
+      return { rows, count };
+    };
+
+    Product.getCategoryProductsAndCount = async function getCategoryProducts(requestMeta, categoryId) {
+      const { Category } = models;
+      const category = await Category.findByPk(categoryId);
+
+      const queryOptions = dbQueryOptions(requestMeta);
+      const rows = await category.getProducts({
+        ...queryOptions
+      });
+
+      const count = await category.countProducts();
+      return { rows, count };
+    };
   };
 
-  Product.removeAttribute('id')
+  Product.removeAttribute('id');
+
   return Product;
 };
