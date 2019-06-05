@@ -6,6 +6,12 @@ import {
   ORDER_VALUES_ALLOWED
 } from 'src/config/constants';
 
+/**
+ * @param  {Object} req - the request object
+ * @param  {Object} res - the response object
+ * @param  {Function} next - switch to the next route middleware
+ * @return {*} - returns void or next()
+ */
 export const validatePage = (req, res, next) => {
   if (req.query.page < 1) {
     return next(httpException.handle(ERROR_CODES.PAG_03));

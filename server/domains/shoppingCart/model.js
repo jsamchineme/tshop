@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'shopping_cart'
   });
-  ShoppingCart.associate = function(models) {
+  ShoppingCart.initialise = function(models) {
     // ShoppingCart is a collection of CartItems
     // This could rather be name CartItem
     ShoppingCart.belongsTo(models.Product, {

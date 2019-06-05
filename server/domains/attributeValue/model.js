@@ -18,13 +18,14 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'attribute_value'
   });
-  AttributeValue.associate = function(models) {
+
+  AttributeValue.initialise = function (models) {
     AttributeValue.belongsTo(models.Attribute, {
       foreignKey: 'attribute_id',
       as: 'attribute'
     });
   };
 
-  AttributeValue.removeAttribute('id')
+  AttributeValue.removeAttribute('id');
   return AttributeValue;
 };

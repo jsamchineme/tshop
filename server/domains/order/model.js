@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'order'
   });
-  Order.associate = function(models) {
+  Order.initialise = function (models) {
     Order.belongsTo(models.Customer, {
       foreignKey: 'customer_id',
       as: 'customer'
@@ -73,6 +73,6 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Order.removeAttribute('id')
+  Order.removeAttribute('id');
   return Order;
 };

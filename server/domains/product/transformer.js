@@ -20,5 +20,19 @@ export default {
       thumbnail: row.thumbnail,
       display: row.display,
     };
+  },
+  locations: {
+    collection(data) {
+      data.rows = data.rows.map(row => this.item(row));
+      return data;
+    },
+    item(row) {
+      return {
+        category_id: row.category_id,
+        category_name: row.name,
+        department_id: row.department_id,
+        department_name: row.department.name,
+      };
+    }
   }
 };

@@ -22,13 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'shipping'
   });
-  Shipping.associate = function(models) {
+  Shipping.initialise = function (models) {
     Shipping.hasOne(models.ShippingRegion, {
       foreignKey: 'shipping_region_id',
       as: 'shipping_region'
     });
   };
 
-  Shipping.removeAttribute('id')
+  Shipping.removeAttribute('id');
   return Shipping;
 };

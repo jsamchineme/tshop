@@ -17,10 +17,19 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'department'
   });
-  Department.associate = function(models) {
-    // associations can be defined here
+
+  Department.initialise = function (models) {
+    Department.hasMany(models.Category, {
+      foreignKey: 'category_id',
+      as: 'categories',
+    });
+
+    Department.getAllDepartments = async () => {
+      const rows = await Department.findAll();
+      return { rows };
+    };
   };
 
-  Department.removeAttribute('id')
+  Department.removeAttribute('id');
   return Department;
 };

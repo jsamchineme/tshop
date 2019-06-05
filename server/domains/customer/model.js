@@ -1,3 +1,7 @@
+import hashPassword from 'src/utils/hashPassword';
+import bcrypt from 'bcryptjs';
+import { Op } from 'sequelize';
+
 module.exports = (sequelize, DataTypes) => {
   const Customer = sequelize.define('Customer', {
     customer_id: {
@@ -64,13 +68,56 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     timestamps: false,
-    tableName: 'customer'
+    tableName: 'customer',
+    hooks: {
+      beforeCreate(data) {
+        data.password = hashPassword(data.password);
+      },
+    },
+    scopes: {
+      byField ({ field, value}) {
+        return {
+          where: {
+            [field]: {
+              [Op.eq]: value
+            }
+          }
+        }
+      }
+    }
   });
-  Customer.associate = function(models) {
+
+  Customer.initialise = function(models) {
     Customer.hasOne(models.ShippingRegion, {
       foreignKey: 'shipping_region_id',
       as: 'shipping_region'
     });
+
+    Customer.getByField = (field, value) => Customer.scope({ method: ['byField', { field, value }]}).findOne();
+
+    Customer.hasCorrectPassword = (password, customer) => {
+      return bcrypt.compareSync(password, customer.password);
+    }
+
+    Customer.createCustomer = async (data) => {
+      const newCustomer = await Customer.create({
+        name: data.name || '',
+        email: data.email || '',
+        password: data.password || '',
+        credit_card: data.credit_card || '',
+        address_1: data.address_1 || '',
+        address_2: data.address_2 || '',
+        city: data.city || '',
+        region: data.region || '',
+        postal_code: data.postal_code || '',
+        country: data.country || '',
+        shipping_region_id: data.shipping_region_id || 0,
+        day_phone: data.day_phone || '',
+        eve_phone: data.eve_phone || '',
+        mob_phone: data.mob_phone || '',
+      });
+      return newCustomer;
+    }
   };
 
   Customer.removeAttribute('id')

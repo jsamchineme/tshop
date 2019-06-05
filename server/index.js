@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 app.use('/api', baseRouter);
 
 app.use('*', (req, res) => {
-  return res.status(200).send({
+  return res.status(404).send({
     error: 'Route not found'
   });
 });

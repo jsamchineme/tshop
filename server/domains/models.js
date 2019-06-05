@@ -4,7 +4,15 @@ import config from 'src/config/database';
 const env = process.env.NODE_ENV || 'development';
 const sequelizeDatabaseConfig = config[env];
 const { database, username, password } = sequelizeDatabaseConfig;
-const sequelize = new Sequelize(database, username, password, sequelizeDatabaseConfig);
+const sequelize = new Sequelize(database, username, password, sequelizeDatabaseConfig, {
+  define: {
+    hooks: {
+      afterCreate: (record) => {
+        console.log(record, '>>>>>Record');
+      }
+    }
+  }
+});
 
 const db = {
   Attribute: sequelize.import('./attribute/model'),
@@ -25,8 +33,8 @@ const db = {
 };
 
 Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+  if (db[modelName].initialise) {
+    db[modelName].initialise(db);
   }
 });
 

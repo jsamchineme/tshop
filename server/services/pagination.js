@@ -22,7 +22,7 @@ export const getOrderByData = (field) => {
  * @returns {*} - pagination object
  */
 export const dbQueryOptions = ({ page, pageSize, orderBy }) => {
-  console.log({ page, pageSize, orderBy });
+  // console.log({ page, pageSize, orderBy });
   const currentPage = page - 1;
   const offset = currentPage * pageSize;
   const limit = pageSize;

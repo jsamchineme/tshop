@@ -1,4 +1,5 @@
 import { dbQueryOptions } from 'src/services/pagination';
+import { Op } from 'sequelize';
 
 module.exports = (sequelize, DataTypes) => {
   const Product = sequelize.define('Product', {
@@ -41,7 +42,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'product'
   });
-  Product.associate = function (models) {
+
+  Product.initialise = function (models) {
     Product.belongsToMany(models.Category, {
       foreignKey: 'product_id',
       otherKey: 'category_id',
@@ -53,11 +55,15 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'product_id',
       otherKey: 'attribute_value_id',
       through: 'product_attribute',
-      as: 'attribute_values',
+      as: 'details',
       timestamps: false,
     });
+    Product.hasMany(models.Review, {
+      foreignKey: 'product_id',
+      as: 'reviews',
+    });
 
-    Product.getAllProductsAndCount = async (paginationMeta) => {
+    Product.getAllProductsAndCount = async ({ paginationMeta }) => {
       const queryOptions = dbQueryOptions(paginationMeta);
       const rows = await Product.findAll({
         ...queryOptions
@@ -66,19 +72,124 @@ module.exports = (sequelize, DataTypes) => {
       return { rows, count };
     };
 
-    Product.getCategoryProductsAndCount = async function getCategoryProducts(requestMeta, categoryId) {
+    Product.getCategoryProductsAndCount = async ({ paginationMeta, categoryId }) => {
       const { Category } = models;
       const category = await Category.findByPk(categoryId);
-
-      const queryOptions = dbQueryOptions(requestMeta);
+      const queryOptions = dbQueryOptions(paginationMeta);
       const rows = await category.getProducts({
         ...queryOptions
       });
-
       const count = await category.countProducts();
       return { rows, count };
     };
+
+    Product.getDepartmentProductsAndCount = async ({
+      paginationMeta,
+      departmentId,
+      throwDepartmentNotFound
+    }) => {
+      const { Department } = models;
+      const department = await Department.findByPk(departmentId);
+      if (!department) {
+        return throwDepartmentNotFound();
+      }
+      const categories = await department.getCategories({
+        include: { model: models.Product, as: 'products', attributes: ['product_id'] }
+      });
+      const productIds = [];
+      categories.map((category) => {
+        category.products.forEach(product => productIds.push(product.product_id));
+        return productIds;
+      });
+
+      const queryOptions = dbQueryOptions(paginationMeta);
+      const rows = await Product.findAll({
+        ...queryOptions,
+        where: { product_id: { [Op.in]: productIds } },
+      });
+      const count = productIds.length;
+      return { rows, count };
+    };
+
+    Product.getProductDetails = async ({
+      productId,
+      throwProductNotFound
+    }) => {
+      const product = await Product.findByPk(productId);
+
+      if (!product) {
+        return throwProductNotFound();
+      }
+
+      const rows = await product.getDetails({
+        include: [{
+          model: models.Attribute,
+          as: 'attribute',
+          required: true,
+        }]
+      });
+
+      return { rows };
+    };
+
+    Product.getProductLocations = async ({
+      productId,
+      throwProductNotFound
+    }) => {
+      const product = await Product.findByPk(productId);
+
+      if (!product) {
+        return throwProductNotFound();
+      }
+
+      const rows = await product.getCategories({
+        include: [{
+          model: models.Department,
+          as: 'department',
+          required: true,
+        }]
+      });
+
+      return { rows };
+    };
+
+    Product.getProductReviewsAndCount = async ({
+      productId,
+      paginationMeta,
+      throwProductNotFound
+    }) => {
+      const product = await Product.findByPk(productId);
+
+      if (!product) {
+        return throwProductNotFound();
+      }
+      const queryOptions = dbQueryOptions(paginationMeta);
+      const rows = await product.getReviews({
+        ...queryOptions
+      });
+      const count = await product.countReviews();
+
+      return { rows, count };
+    };
+
+    Product.createProductReview = async ({
+      data,
+      throwProductNotFound,
+      productId
+    }) => {
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        return throwProductNotFound();
+      }
+
+      const newProductReview = await product.createReview({
+        ...data,
+      });
+
+      return newProductReview;
+    };
   };
+
 
   Product.removeAttribute('id');
 

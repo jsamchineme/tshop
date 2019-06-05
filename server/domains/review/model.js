@@ -25,12 +25,20 @@ module.exports = (sequelize, DataTypes) => {
     created_on: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   }, {
     timestamps: false,
     tableName: 'review'
   });
 
-  Review.removeAttribute('id')
+  Review.initialise = function (models) {
+    Review.belongsTo(models.Customer, {
+      foreignKey: 'customer_id',
+      as: 'reviewer',
+    });
+  };
+
+  Review.removeAttribute('id');
   return Review;
 };
