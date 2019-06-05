@@ -1,4 +1,6 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const {
   DB_HOST,
@@ -14,28 +16,28 @@ const {
 } = process.env;
 
 module.exports = {
-  "development": {
-    "username": DB_USER,
-    "password": DB_PASS,
-    "database": DB_NAME,
-    "host": DB_HOST,
-    "port": DB_PORT,
-    "dialect": "mysql"
+  development: {
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
+    port: DB_PORT,
+    dialect: 'mysql'
   },
-  "test": {
-    "username": TEST_DB_USER,
-    "password": TEST_DB_PASS,
-    "database": TEST_DB_NAME,
-    "host": TEST_DB_HOST,
-    "port": TEST_DB_PORT,
-    "dialect": "mysql"
+  test: {
+    username: TEST_DB_USER,
+    password: TEST_DB_PASS,
+    database: TEST_DB_NAME,
+    host: TEST_DB_HOST,
+    port: TEST_DB_PORT,
+    dialect: 'mysql'
   },
-  "production": {
-    "username": DB_USER,
-    "password": DB_PASS,
-    "database": DB_NAME,
-    "host": DB_HOST,
-    "port": DB_PORT,
-    "dialect": "mysql"
+  production: {
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
+    port: DB_PORT,
+    dialect: 'mysql'
   },
 }

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
-import logger from '../services/logger';
+import logger from 'src/services/logger';
+
 dotenv.config();
 
 const {
@@ -18,7 +19,7 @@ const {
 
 
 let host, user, password, port, database;
-switch(NODE_ENV) {
+switch (NODE_ENV) {
   case 'test':
     host = TEST_DB_HOST;
     user = TEST_DB_USER;
@@ -36,12 +37,12 @@ switch(NODE_ENV) {
 
 const migrationConfig = {
   host,
-	user,
+  user,
   password,
   port,
-	database,
+  database,
 };
 
-logger.info(`Environment::: ${NODE_ENV}`)
+logger.info(`Environment::: ${NODE_ENV}`);
 
 export default migrationConfig;
