@@ -84,6 +84,16 @@ module.exports = (sequelize, DataTypes) => {
       return foundProducts[0];
     };
 
+    ShoppingCart.getTotalAmountForCart = async ({ cartId }) => {
+      const rows = await ShoppingCart.findCartItems({ cartId });
+      let total_amount = 0;
+
+      rows.forEach((item) => {
+        total_amount += Number(item.product.price) * item.quantity;
+      });
+      return total_amount;
+    };
+
     ShoppingCart.findCartItems = async ({ cartId, scope }) => {
       let rows;
       if (scope === 'savedForLater') {

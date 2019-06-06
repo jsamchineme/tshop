@@ -18,7 +18,7 @@ const validateNewCartItem = async (req, res, next) => {
   } catch (error) {
     const errorDetail = error.details[0];
     const message = errorDetail.message.replace(/"/g, '');
-    return next(httpException.handle(ERROR_CODES.CAR_01, message));
+    next(httpException.handle(ERROR_CODES.ORD_01, message));
   }
 };
 
