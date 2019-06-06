@@ -11,7 +11,6 @@ import productTransformer from './transformer';
 export const getAllProducts = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const result = await productRepository.getAllProducts(queryOptions);
-
   const responseData = productTransformer.collection(result, req);
   return response.success(res, responseData);
 };
@@ -21,7 +20,6 @@ export const getCategoryProducts = async (req, res) => {
   const { categoryId } = req.params;
   queryOptions.categoryId = categoryId;
   const result = await productRepository.getCategoryProducts(queryOptions);
-
   const responseData = productTransformer.collection(result, req);
   return response.success(res, responseData);
 };
@@ -30,11 +28,8 @@ export const getDepartmentProducts = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { departmentId } = req.params;
   queryOptions.departmentId = departmentId;
-  const throwDepartmentNotFound = () => { throw httpException.handle(ERROR_CODES.DEP_01); };
-
-  queryOptions.throwDepartmentNotFound = throwDepartmentNotFound;
+  queryOptions.throwDepartmentNotFound = () => { throw httpException.handle(ERROR_CODES.DEP_01); };
   const result = await productRepository.getDepartmentProducts(queryOptions);
-
   const responseData = productTransformer.collection(result, req);
   return response.success(res, responseData);
 };
@@ -45,11 +40,9 @@ export const getSingleProduct = async (req, res) => {
     productId,
     requestURL: req.url
   });
-
   if (result === null || result === undefined) {
     throw httpException.handle(ERROR_CODES.PRO_01);
   }
-
   const responseData = productTransformer.item(result, req);
   return response.success(res, responseData);
 };
@@ -58,11 +51,8 @@ export const getProductDetails = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
   queryOptions.productId = productId;
-  const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-
-  queryOptions.throwProductNotFound = throwProductNotFound;
+  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
   let result = await productRepository.getProductDetails(queryOptions);
-
   result = productTransformer.attributeValues.collection(result, req);
   return response.success(res, result.rows);
 };
@@ -71,11 +61,8 @@ export const getProductLocations = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
   queryOptions.productId = productId;
-  const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-
-  queryOptions.throwProductNotFound = throwProductNotFound;
+  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
   let result = await productRepository.getProductLocations(queryOptions);
-
   result = productTransformer.locations.collection(result, req);
   return response.success(res, result.rows);
 };
@@ -84,9 +71,7 @@ export const getProductReviews = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
   queryOptions.productId = productId;
-  const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-
-  queryOptions.throwProductNotFound = throwProductNotFound;
+  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
   const result = await productRepository.getProductReviews(queryOptions);
   return response.success(res, result.rows);
 };
@@ -96,9 +81,7 @@ export const createProductReview = async (req, res) => {
   const { id: customer_id } = req.decoded;
   const data = req.body;
   data.customer_id = customer_id;
-
   const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-
   const result = await productRepository.createProductReview({
     data,
     throwProductNotFound,

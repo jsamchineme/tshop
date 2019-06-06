@@ -19,6 +19,8 @@ const loadErrors = (errors) => {
   const { type, context } = errors[0];
   const { key: field } = context;
 
+  console.log(errors);
+
   let message;
   const status = 422;
   const typeField = fieldErrorTypeCodes[field] || {};

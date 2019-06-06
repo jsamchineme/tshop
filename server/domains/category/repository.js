@@ -1,7 +1,7 @@
 import { Category as CategoryModel } from 'src/domains/models';
 import baseRepository from 'src/domains/baseRepository';
 
-const productRepository = {
+const categoryRepository = {
   init() {
     this.domain = 'category';
   },
@@ -51,6 +51,6 @@ const productRepository = {
   },
 };
 
-productRepository.init();
+categoryRepository.init();
 
-export default productRepository;
+export default categoryRepository;

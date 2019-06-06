@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'shipping'
   });
   Shipping.initialise = function (models) {
-    Shipping.hasOne(models.ShippingRegion, {
+    Shipping.belongsTo(models.ShippingRegion, {
       foreignKey: 'shipping_region_id',
       as: 'shipping_region'
     });

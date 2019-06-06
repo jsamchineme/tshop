@@ -65,9 +65,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Product.getAllProductsAndCount = async ({ paginationMeta }) => {
       const queryOptions = dbQueryOptions(paginationMeta);
-      const rows = await Product.findAll({
-        ...queryOptions
-      });
+      const rows = await Product.findAll({ ...queryOptions });
       const count = await Product.count();
       return { rows, count };
     };
@@ -76,9 +74,7 @@ module.exports = (sequelize, DataTypes) => {
       const { Category } = models;
       const category = await Category.findByPk(categoryId);
       const queryOptions = dbQueryOptions(paginationMeta);
-      const rows = await category.getProducts({
-        ...queryOptions
-      });
+      const rows = await category.getProducts({ ...queryOptions });
       const count = await category.countProducts();
       return { rows, count };
     };
@@ -94,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
         return throwDepartmentNotFound();
       }
       const categories = await department.getCategories({
-        include: { model: models.Product, as: 'products', attributes: ['product_id'] }
+        include: { model: models.Product, as: 'products', required: true }
       });
       const productIds = [];
       categories.map((category) => {
@@ -164,19 +160,13 @@ module.exports = (sequelize, DataTypes) => {
         return throwProductNotFound();
       }
       const queryOptions = dbQueryOptions(paginationMeta);
-      const rows = await product.getReviews({
-        ...queryOptions
-      });
+      const rows = await product.getReviews({ ...queryOptions });
       const count = await product.countReviews();
 
       return { rows, count };
     };
 
-    Product.createProductReview = async ({
-      data,
-      throwProductNotFound,
-      productId
-    }) => {
+    Product.createProductReview = async ({ data, throwProductNotFound, productId }) => {
       const product = await Product.findByPk(productId);
       if (!product) {
         return throwProductNotFound();
@@ -190,8 +180,6 @@ module.exports = (sequelize, DataTypes) => {
     };
   };
 
-
   Product.removeAttribute('id');
-
   return Product;
 };

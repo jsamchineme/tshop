@@ -2,9 +2,9 @@ import {
   ShoppingCart as ShoppingCartModel,
 } from 'src/domains/models';
 
-const productRepository = {
+const orderRepository = {
   init() {
-    this.domain = 'product';
+    this.domain = 'order';
   },
 
   async addProducToCart({ data, cartId }) {
@@ -20,16 +20,8 @@ const productRepository = {
     const rows = await ShoppingCartModel.findCartItems({ cartId, scope });
     return rows;
   },
-
-  // async createProductReview({
-  //   data,
-  //   throwProductNotFound,
-  //   productId,
-  // }) {
-  //   return ProductModel.createProductReview({ data, throwProductNotFound, productId });
-  // }
 };
 
-productRepository.init();
+orderRepository.init();
 
-export default productRepository;
+export default orderRepository;

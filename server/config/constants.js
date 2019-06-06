@@ -79,6 +79,11 @@ export const ERROR_CODES = {
     status: 422,
     code: 'REV_01'
   },
+  TAX_01: {
+    status: 401,
+    code: 'TAX_01',
+    message: 'Don\'t exist tax with this ID',
+  },
   USR_01: {
     status: 401,
     code: 'USR_01',

@@ -15,6 +15,30 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'shipping_region'
   });
 
-  ShippingRegion.removeAttribute('id')
+  ShippingRegion.initialise = function (models) {
+    ShippingRegion.hasMany(models.Shipping, {
+      foreignKey: 'shipping_region_id',
+      as: 'shippings'
+    });
+
+    ShippingRegion.getAllShippingRegions = async () => {
+      const rows = await ShippingRegion.findAll();
+      return { rows };
+    };
+
+    ShippingRegion.getShippingsForARegion = async ({
+      shippingRegionId,
+      throwRegionNotFound
+    }) => {
+      const region = await ShippingRegion.findByPk(shippingRegionId);
+      if (!region) {
+        throwRegionNotFound();
+      }
+      const rows = await region.getShippings();
+      return { rows };
+    };
+  };
+
+  ShippingRegion.removeAttribute('id');
   return ShippingRegion;
 };

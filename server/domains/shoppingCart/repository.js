@@ -2,9 +2,9 @@ import {
   ShoppingCart as ShoppingCartModel,
 } from 'src/domains/models';
 
-const productRepository = {
+const shoppingCartRepository = {
   init() {
-    this.domain = 'product';
+    this.domain = 'shoppingCart';
   },
 
   async addProducToCart({ data, cartId }) {
@@ -22,6 +22,6 @@ const productRepository = {
   },
 };
 
-productRepository.init();
+shoppingCartRepository.init();
 
-export default productRepository;
+export default shoppingCartRepository;

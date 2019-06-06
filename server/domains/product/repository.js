@@ -28,7 +28,8 @@ const productRepository = {
 
   async getDepartmentProducts({
     requestURL,
-    paginationMeta, departmentId,
+    paginationMeta,
+    departmentId,
     throwDepartmentNotFound,
   }) {
     const responseData = await baseRepository.getCollectionData({
