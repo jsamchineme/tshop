@@ -1,7 +1,6 @@
 import { getQueryOptions } from 'src/services/queryOptions';
 import httpException from 'src/http/httpException';
 import response from 'src/http/response';
-import attributeTransformer from 'src/domains/attribute/transformer';
 import productReviewTransformer from 'src/domains/review/transformer';
 import {
   ERROR_CODES,
@@ -64,7 +63,7 @@ export const getProductDetails = async (req, res) => {
   queryOptions.throwProductNotFound = throwProductNotFound;
   let result = await productRepository.getProductDetails(queryOptions);
 
-  result = attributeTransformer.collection(result, req);
+  result = productTransformer.attributeValues.collection(result, req);
   return response.success(res, result.rows);
 };
 
