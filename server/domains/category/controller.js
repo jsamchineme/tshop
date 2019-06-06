@@ -19,8 +19,7 @@ export const getProductCategories = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
   queryOptions.productId = productId;
-  const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-  queryOptions.throwProductNotFound = throwProductNotFound;
+  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
   const result = await categoryRepository.getProductCategories(queryOptions);
 
   const responseData = categoryTransformer.collection(result, req);
@@ -31,9 +30,7 @@ export const getDepartmentCategories = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { departmentId } = req.params;
   queryOptions.departmentId = departmentId;
-  const throwDepartmentNotFound = () => { throw httpException.handle(ERROR_CODES.DEP_01); };
-
-  queryOptions.throwDepartmentNotFound = throwDepartmentNotFound;
+  queryOptions.throwDepartmentNotFound = () => { throw httpException.handle(ERROR_CODES.DEP_01); };
   const result = await categoryRepository.getDepartmentCategories(queryOptions);
 
   const responseData = categoryTransformer.collection(result, req);

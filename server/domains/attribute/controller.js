@@ -17,9 +17,7 @@ export const getAllAttributes = async (req, res) => {
 export const getValuesForAttribute = async (req, res) => {
   const { attributeId } = req.params;
   const queryOptions = getQueryOptions(req);
-
-  const throwAttributeNotFound = () => { throw httpException.handle(ERROR_CODES.ATR_01); };
-  queryOptions.throwAttributeNotFound = throwAttributeNotFound;
+  queryOptions.throwAttributeNotFound = () => { throw httpException.handle(ERROR_CODES.ATR_01); };
   queryOptions.attributeId = attributeId;
 
   const result = await attributeRepository.getValuesForAttribute(queryOptions);
@@ -30,9 +28,7 @@ export const getProductAttributes = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
   queryOptions.productId = productId;
-  const throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-
-  queryOptions.throwProductNotFound = throwProductNotFound;
+  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
   let result = await attributeRepository.getProductAttributes(queryOptions);
 
   result = productTransformer.attributeValues.collection(result, req);

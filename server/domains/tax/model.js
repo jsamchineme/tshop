@@ -19,6 +19,13 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tax'
   });
 
-  Tax.removeAttribute('id')
+  Tax.initialise = function (models) {
+    Tax.getAllTaxes = async () => {
+      const rows = await models.Tax.findAll();
+      return { rows };
+    };
+  };
+
+  Tax.removeAttribute('id');
   return Tax;
 };

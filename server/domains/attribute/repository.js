@@ -1,9 +1,9 @@
 import { Attribute as AttributeModel } from 'src/domains/models';
 import baseRepository from 'src/domains/baseRepository';
 
-const productRepository = {
+const attributeRepository = {
   init() {
-    this.domain = 'category';
+    this.domain = 'attribute';
   },
 
   async getAllAttributes({ requestURL }) {
@@ -34,6 +34,6 @@ const productRepository = {
   },
 };
 
-productRepository.init();
+attributeRepository.init();
 
-export default productRepository;
+export default attributeRepository;

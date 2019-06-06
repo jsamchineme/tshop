@@ -1,7 +1,7 @@
 import { Customer as CustomerModel } from 'src/domains/models';
 import baseRepository from 'src/domains/baseRepository';
 
-const productRepository = {
+const customerRepository = {
   init() {
     this.domain = 'customer';
   },
@@ -24,6 +24,6 @@ const productRepository = {
   }
 };
 
-productRepository.init();
+customerRepository.init();
 
-export default productRepository;
+export default customerRepository;

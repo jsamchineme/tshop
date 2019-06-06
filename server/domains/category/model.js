@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Category.initialise = function (models) {
-    Category.belongsToMany(models.Category, {
+    Category.belongsToMany(models.Product, {
       foreignKey: 'category_id',
       otherKey: 'product_id',
       timestamps: false,
