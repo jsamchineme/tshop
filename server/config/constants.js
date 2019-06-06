@@ -36,6 +36,26 @@ export const ERROR_CODES = {
     status: 404,
     code: 'DEP_01'
   },
+  ORD_01: {
+    status: 422,
+    code: 'ORD_01',
+    message: 'Wrong Input',
+  },
+  ORD_02: {
+    status: 404,
+    code: 'ORD_02',
+    message: 'Don\'t exist shipping with this ID',
+  },
+  ORD_03: {
+    status: 404,
+    code: 'ORD_03',
+    message: 'Don\'t exist tax with this ID',
+  },
+  ORD_04: {
+    status: 400,
+    code: 'ORD_04',
+    message: 'No Item in the Cart',
+  },
   PAG_01: {
     status: 400,
     code: 'PAG_01'

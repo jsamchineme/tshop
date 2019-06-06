@@ -20,14 +20,6 @@ const productRepository = {
     const rows = await ShoppingCartModel.findCartItems({ cartId, scope });
     return rows;
   },
-
-  // async createProductReview({
-  //   data,
-  //   throwProductNotFound,
-  //   productId,
-  // }) {
-  //   return ProductModel.createProductReview({ data, throwProductNotFound, productId });
-  // }
 };
 
 productRepository.init();

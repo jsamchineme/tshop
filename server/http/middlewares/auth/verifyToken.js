@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import httpException from 'src/http/httpException';
+import { Customer as CustomerModel } from 'src/domains/models';
 import {
   ERROR_CODES,
 } from 'src/config/constants';
@@ -19,9 +20,14 @@ const verifyToken = (req, res, next) => {
   if (token) {
     token = stripTokenBearerString(token);
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         throw httpException.handle(ERROR_CODES.AUT_02);
+      }
+
+      const user = await CustomerModel.findByPk(decoded.id);
+      if (!user) {
+        next(httpException.handle(ERROR_CODES.AUT_02));
       }
       req.decoded = decoded;
       next();

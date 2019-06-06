@@ -52,13 +52,7 @@ export const clearCartItems = async (req, res) => {
 
 export const getTotalAmountForCart = async (req, res) => {
   const { cartId } = req.params;
-  const rows = await ShoppingCartModel.findCartItems({ cartId });
-  let total_amount = 0;
-
-  rows.forEach((item) => {
-    total_amount += Number(item.product.price);
-    return total_amount;
-  });
+  const total_amount = await ShoppingCartModel.getTotalAmountForCart({ cartId });
   return response.success(res, { total_amount });
 };
 
