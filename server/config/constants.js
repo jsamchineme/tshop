@@ -1,6 +1,11 @@
 export const PAGINATION_SIZE = 20;
 
 export const ERROR_CODES = {
+  ATR_01: {
+    message: 'Don\'t exist attribute with this ID',
+    status: 404,
+    code: 'ATR_01'
+  },
   AUT_01: {
     message: 'Authorization code is empty',
     status: 403,
@@ -15,6 +20,16 @@ export const ERROR_CODES = {
     message: 'Don\'t exist category with this ID',
     status: 404,
     code: 'CAT_01'
+  },
+  CAR_01: {
+    message: 'Wrong Input',
+    status: 422,
+    code: 'CAR_01'
+  },
+  CAR_02: {
+    message: 'Don\'t exist cart item with this ID',
+    status: 404,
+    code: 'CAR_02'
   },
   DEP_01: {
     message: 'Don\'t exist department with this ID',

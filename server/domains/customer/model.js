@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     scopes: {
-      byField ({ field, value}) {
+      byField ({ field, value }) {
         return {
           where: {
             [field]: {
@@ -93,7 +93,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'shipping_region'
     });
 
-    Customer.getByField = (field, value) => Customer.scope({ method: ['byField', { field, value }]}).findOne();
+    Customer.getByField = (field, value) => Customer.scope({ method: ['byField', { field, value }] }).findOne();
 
     Customer.hasCorrectPassword = (password, customer) => {
       return bcrypt.compareSync(password, customer.password);
@@ -120,6 +120,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  Customer.removeAttribute('id')
+  Customer.removeAttribute('id');
   return Customer;
 };
