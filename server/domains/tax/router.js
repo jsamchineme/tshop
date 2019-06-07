@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import wrapAsync from 'src/http/wrapAsync';
 import {
-  getAllTaxes, getTaxById,
+  getAllTaxes,
+  getTaxById,
 } from './controller';
 
 const taxRouter = Router();

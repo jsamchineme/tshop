@@ -6,10 +6,10 @@ import {
 import newCartItem from './joiSchemas/newCartItem';
 
 /**
- * @param  {Object} req - the request object
- * @param  {Object} res - the response object
- * @param  {Function} next - switch to the next route middleware
- * @return {*} - returns void or next()
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @param {Function} next - handle to the next middleware
+ * @return {void}
  */
 const validateNewCartItem = async (req, res, next) => {
   try {
@@ -18,7 +18,7 @@ const validateNewCartItem = async (req, res, next) => {
   } catch (error) {
     const errorDetail = error.details[0];
     const message = errorDetail.message.replace(/"/g, '');
-    return next(httpException.handle(ERROR_CODES.CAR_01, message));
+    next(httpException.handle(ERROR_CODES.CAR_01, message));
   }
 };
 

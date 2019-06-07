@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import wrapAsync from 'src/http/wrapAsync';
 import {
-  getAllDepartments, getSingleDepartment,
+  getAllDepartments,
+  getSingleDepartment,
 } from './controller';
 
 const productRouter = Router();

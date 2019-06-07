@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'shipping_region'
   });
 
+  /**
+   * Initialising the Shipping Region Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   ShippingRegion.initialise = function (models) {
     ShippingRegion.hasMany(models.Shipping, {
       foreignKey: 'shipping_region_id',
@@ -26,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       return { rows };
     };
 
+    /**
+     * @param {Object} queryOptions - The options used for retrieving data
+     * @param {Number} queryOptions.shippingRegionId - value of the shipping region id
+     * @param {Function} queryOptions.throwRegionNotFound - function to call when shipping region is not found
+     * @returns {Object} - contains fetched rows
+     */
     ShippingRegion.getShippingsForARegion = async ({
       shippingRegionId,
       throwRegionNotFound

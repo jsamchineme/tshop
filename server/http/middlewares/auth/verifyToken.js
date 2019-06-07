@@ -14,6 +14,12 @@ const stripTokenBearerString = (tokenString) => {
   return token;
 };
 
+/**
+ * @param {Object} req - the request object
+ * @param {Object} res - the response object
+ * @param {Function} next - handle to the next middleware
+ * @return {void}
+ */
 const verifyToken = (req, res, next) => {
   let token = req.headers['user-key'];
 

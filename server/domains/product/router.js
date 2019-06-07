@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { validatePage, validateOrderBy } from 'src/http/middlewares/pagination';
 import verifyToken from 'src/http/middlewares/auth/verifyToken';
 import validateNewReview from 'src/http/middlewares/requestInput/newReview';
+import validateProductSearch from 'src/http/middlewares/requestInput/productSearch';
 import wrapAsync from 'src/http/wrapAsync';
 import {
   getAllProducts,
@@ -12,6 +13,7 @@ import {
   getProductLocations,
   getProductReviews,
   createProductReview,
+  getProductsForSearch,
 } from './controller';
 
 const productRouter = Router();
@@ -21,8 +23,12 @@ productRouter.get('/products',
   validateOrderBy('product'),
   wrapAsync(getAllProducts));
 
-productRouter.get('/products/:productId',
+productRouter.get('^/products/:productId([0-9])',
   wrapAsync(getSingleProduct));
+
+productRouter.get('/products/search',
+  validateProductSearch,
+  wrapAsync(getProductsForSearch));
 
 productRouter.get('/products/inCategory/:categoryId',
   validateOrderBy('product'),

@@ -1,6 +1,6 @@
 import redis from 'redis';
 import bluebird from 'bluebird';
-import logger from 'src/services/logger';
+import logger from 'src/utils/logger';
 import dotenv from 'dotenv';
 
 dotenv.config();

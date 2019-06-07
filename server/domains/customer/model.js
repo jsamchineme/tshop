@@ -75,19 +75,25 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     scopes: {
-      byField ({ field, value }) {
+      byField({ field, value }) {
         return {
           where: {
             [field]: {
               [Op.eq]: value
             }
           }
-        }
+        };
       }
     }
   });
 
-  Customer.initialise = function(models) {
+  /**
+   * Initialising the Customer Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
+  Customer.initialise = function (models) {
     Customer.hasOne(models.ShippingRegion, {
       foreignKey: 'shipping_region_id',
       as: 'shipping_region'
@@ -97,7 +103,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Customer.hasCorrectPassword = (password, customer) => {
       return bcrypt.compareSync(password, customer.password);
-    }
+    };
 
     Customer.createCustomer = async (data) => {
       const newCustomer = await Customer.create({
@@ -117,7 +123,7 @@ module.exports = (sequelize, DataTypes) => {
         mob_phone: data.mob_phone || '',
       });
       return newCustomer;
-    }
+    };
   };
 
   Customer.removeAttribute('id');

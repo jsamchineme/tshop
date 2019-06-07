@@ -16,13 +16,14 @@ export const getOrderByData = (field) => {
 };
 
 /**
- * @param {*} page - the current page
- * @param {*} pageSize - the number records on a page
- * @param {*} orderBy - the orderBy field
+ * Convert the request pagination properties to database query pagination properties
+ * @param {*} options - the pagination properties passed from http request query
+ * @param {*} options.page - the current page
+ * @param {*} options.pageSize - the number of records on a page
+ * @param {*} options.orderBy - the orderBy value
  * @returns {*} - pagination object
  */
-export const dbQueryOptions = ({ page, pageSize, orderBy }) => {
-  // console.log({ page, pageSize, orderBy });
+export const getDBQueryPaginationOptions = ({ page, pageSize, orderBy }) => {
   const currentPage = page - 1;
   const offset = currentPage * pageSize;
   const limit = pageSize;
@@ -42,6 +43,10 @@ export const dbQueryOptions = ({ page, pageSize, orderBy }) => {
   return pageDataOptions;
 };
 
+/**
+ * @param {Object} req - request
+ * @returns {Object} - pagination meta properties from http request
+ */
 export const getPaginationMeta = (req) => {
   const { orderBy = '', limit = PAGINATION_SIZE, page = 1 } = req.query;
 
@@ -54,6 +59,11 @@ export const getPaginationMeta = (req) => {
   return paginationMeta;
 };
 
+/**
+ * @param {Object} totalRecords - count of all records matching database query
+ * @param {Object} pagination - pagination
+ * @returns {Object} - pagination meta returned in server response
+ */
 export const generatePaginationMeta = async (totalRecords, pagination) => {
   const { pageSize, page: currentPage } = pagination;
   const lastPage = Math.ceil(totalRecords / pageSize);

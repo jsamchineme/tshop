@@ -4,10 +4,12 @@ import {
   ERROR_CODES,
 } from 'src/config/constants';
 import { Order as OrderModel } from 'src/domains/models';
-// import orderTransformer from './transformer';
-// import orderRepository from './repository';
 
-
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const createNewOrder = async (req, res) => {
   const { id: customer_id } = req.decoded;
   const data = req.body;
@@ -27,12 +29,22 @@ export const createNewOrder = async (req, res) => {
   }
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getSingleOrder = async (req, res) => {
   const { orderId } = req.params;
   const order = await OrderModel.findByPk(orderId);
   return response.success(res, order);
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getSingleOrderShortDetail = async (req, res) => {
   const { orderId } = req.params;
   const order = await OrderModel.findByPk(orderId, {
@@ -41,9 +53,13 @@ export const getSingleOrderShortDetail = async (req, res) => {
   return response.success(res, order);
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getCustomerOrders = async (req, res) => {
   const { id: customer_id } = req.decoded;
-
   const orders = await OrderModel.getCustomerOrders({ customer_id });
   return response.success(res, orders);
 };

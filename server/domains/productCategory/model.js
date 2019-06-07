@@ -7,6 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'product_category'
   });
 
-  ProductCategory.removeAttribute('id')
+  ProductCategory.removeAttribute('id');
   return ProductCategory;
 };

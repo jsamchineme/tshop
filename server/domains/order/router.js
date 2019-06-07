@@ -16,11 +16,11 @@ orderRouter.post('/orders',
   validateNewOrder,
   wrapAsync(createNewOrder));
 
-orderRouter.get('/orders/:orderId',
+orderRouter.get('^/orders/:orderId([0-9])',
   verifyToken,
   wrapAsync(getSingleOrder));
 
-orderRouter.get('/orders/in/Customer',
+orderRouter.get('/orders/inCustomer',
   verifyToken,
   wrapAsync(getCustomerOrders));
 

@@ -11,7 +11,22 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromModel: () => ProductModel.getAllProductsAndCount({ paginationMeta })
+      fetchFromDB: () => ProductModel.getAllProductsAndCount({ paginationMeta })
+    });
+    return responseData;
+  },
+
+  async getProductsForSearch({
+    requestURL,
+    paginationMeta,
+    allWords,
+    queryString
+  }) {
+    const responseData = await baseRepository.getCollectionData({
+      domain: this.domain,
+      requestURL,
+      paginationMeta,
+      fetchFromDB: () => ProductModel.getProductsForSearchAndCount({ paginationMeta, allWords, queryString })
     });
     return responseData;
   },
@@ -21,7 +36,7 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromModel: () => ProductModel.getCategoryProductsAndCount({ paginationMeta, categoryId })
+      fetchFromDB: () => ProductModel.getCategoryProductsAndCount({ paginationMeta, categoryId })
     });
     return responseData;
   },
@@ -36,7 +51,7 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromModel: () => ProductModel.getDepartmentProductsAndCount({
+      fetchFromDB: () => ProductModel.getDepartmentProductsAndCount({
         paginationMeta,
         departmentId,
         throwDepartmentNotFound
@@ -49,7 +64,7 @@ const productRepository = {
     const responseData = await baseRepository.getItemData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => ProductModel.findByPk(productId)
+      fetchFromDB: () => ProductModel.findByPk(productId)
     });
     return responseData;
   },
@@ -59,7 +74,7 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta: undefined,
-      fetchFromModel: () => ProductModel.getProductDetails({ productId, throwProductNotFound })
+      fetchFromDB: () => ProductModel.getProductDetails({ productId, throwProductNotFound })
     });
     return responseData;
   },
@@ -69,7 +84,7 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta: undefined,
-      fetchFromModel: () => ProductModel.getProductLocations({ productId, throwProductNotFound })
+      fetchFromDB: () => ProductModel.getProductLocations({ productId, throwProductNotFound })
     });
     return responseData;
   },
@@ -84,7 +99,7 @@ const productRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromModel: () => ProductModel.getProductReviewsAndCount({
+      fetchFromDB: () => ProductModel.getProductReviewsAndCount({
         productId,
         throwProductNotFound,
         paginationMeta

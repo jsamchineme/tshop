@@ -10,7 +10,7 @@ const shippingRegionRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => ShippingRegionModel.getAllShippingRegions()
+      fetchFromDB: () => ShippingRegionModel.getAllShippingRegions()
     });
     return responseData;
   },
@@ -23,7 +23,7 @@ const shippingRegionRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => ShippingRegionModel.getShippingsForARegion({
+      fetchFromDB: () => ShippingRegionModel.getShippingsForARegion({
         shippingRegionId,
         throwRegionNotFound
       }),

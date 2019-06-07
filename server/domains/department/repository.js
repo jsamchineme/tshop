@@ -10,7 +10,7 @@ const departmentRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => DepartmentModel.getAllDepartments({ paginationMeta })
+      fetchFromDB: () => DepartmentModel.getAllDepartments({ paginationMeta })
     });
     return responseData;
   },
@@ -19,7 +19,7 @@ const departmentRepository = {
     const responseData = await baseRepository.getItemData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => DepartmentModel.findByPk(departmentId)
+      fetchFromDB: () => DepartmentModel.findByPk(departmentId)
     });
     return responseData;
   },

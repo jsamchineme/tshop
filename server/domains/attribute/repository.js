@@ -10,7 +10,7 @@ const attributeRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => AttributeModel.getAllAttributes()
+      fetchFromDB: () => AttributeModel.getAllAttributes()
     });
     return responseData;
   },
@@ -19,7 +19,7 @@ const attributeRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => AttributeModel.getValuesForAttribute({ throwAttributeNotFound, attributeId })
+      fetchFromDB: () => AttributeModel.getValuesForAttribute({ throwAttributeNotFound, attributeId })
     });
     return responseData;
   },
@@ -28,7 +28,7 @@ const attributeRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => AttributeModel.getProductAttributes({ throwProductNotFound, productId })
+      fetchFromDB: () => AttributeModel.getProductAttributes({ throwProductNotFound, productId })
     });
     return responseData;
   },

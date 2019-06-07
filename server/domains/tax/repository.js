@@ -10,7 +10,7 @@ const taxRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => TaxModel.getAllTaxes()
+      fetchFromDB: () => TaxModel.getAllTaxes()
     });
     return responseData;
   },
@@ -19,7 +19,7 @@ const taxRepository = {
     const responseData = await baseRepository.getItemData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => TaxModel.findByPk(taxId)
+      fetchFromDB: () => TaxModel.findByPk(taxId)
     });
     return responseData;
   },
