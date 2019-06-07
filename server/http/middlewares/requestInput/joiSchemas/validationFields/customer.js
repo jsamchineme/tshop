@@ -90,6 +90,12 @@ export const mob_phone = joi.string().trim().strict()
     return loadErrors(errors);
   });
 
+export const access_token = joi.string().trim().strict()
+  .required()
+  .error((errors) => {
+    return loadErrors(errors);
+  });
+
 export const shipping_region_id = joi.number().positive().min(1)
   .precision(2)
   .required()

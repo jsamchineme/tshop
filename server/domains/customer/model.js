@@ -110,6 +110,24 @@ module.exports = (sequelize, DataTypes) => {
       return result;
     };
 
+    /**
+     * This finds or creates a customer from facebook
+     * @param {Object} data - data sent from facebook
+     * @returns {SequelizeInstance} - new or existing customer
+     */
+    Customer.storeFacebookUser = async (data) => {
+      let customer = await Customer.getByField('email', data.email);
+      if (!customer) {
+        customer = await Customer.createCustomer(data);
+      }
+      return customer;
+    };
+
+    /**
+     * This creates a customer
+     * @param {Object} data - data sent from facebook
+     * @returns {SequelizeInstance} - new or existing customer
+     */
     Customer.createCustomer = async (data) => {
       const newCustomer = await Customer.create({
         name: data.name || '',

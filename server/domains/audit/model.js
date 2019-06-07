@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     created_on: {
       type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
     message: {
       type: DataTypes.STRING,

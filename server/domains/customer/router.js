@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import validateRegisterCustomer from 'src/http/middlewares/requestInput/registerCustomer';
 import validateLoginCustomer from 'src/http/middlewares/requestInput/loginCustomer';
+import validateFacebookLogin from 'src/http/middlewares/requestInput/facebookLogin';
 import validateCustomerUpdate from 'src/http/middlewares/requestInput/updateCustomer';
 import validateCustomerAddressUpdate from 'src/http/middlewares/requestInput/updateCustomerAddress';
 import validateCreditCardUpdate from 'src/http/middlewares/requestInput/updateCreditCard';
@@ -10,8 +11,9 @@ import wrapAsync from 'src/http/wrapAsync';
 import {
   registerCustomer,
   loginCustomer,
+  loginWithFacebook,
   getCustomerById,
-  updateCustomer
+  updateCustomer,
 } from './controller';
 
 const customerRouter = Router();
@@ -23,6 +25,10 @@ customerRouter.post('/customers',
 customerRouter.post('/customers/login',
   validateLoginCustomer,
   wrapAsync(loginCustomer));
+
+customerRouter.post('/customers/facebook',
+  validateFacebookLogin,
+  wrapAsync(loginWithFacebook));
 
 customerRouter.get('/customer',
   verifyToken,
