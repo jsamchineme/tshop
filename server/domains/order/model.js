@@ -175,7 +175,19 @@ module.exports = (sequelize, DataTypes) => {
       const rows = await Order.scopeByField('customer_id', customer_id).findAll();
       return rows;
     };
+
+    /**
+     * Instance method
+     * for completing the order
+     * @param {SequelizeInstance} order - the order instance
+     * @returns {SequelizeInstance} - the updated order instance
+     */
+    Order.prototype.completeOrder = async (order) => {
+      const updatedOrder = await order.update({ status: 1 });
+      return updatedOrder;
+    };
   };
+
 
   Order.removeAttribute('id');
   return Order;

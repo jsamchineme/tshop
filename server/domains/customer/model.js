@@ -105,6 +105,11 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, customer.password);
     };
 
+    Customer.getAuthUser = async (customerId) => {
+      const result = await Customer.findByPk(customerId);
+      return result;
+    };
+
     Customer.createCustomer = async (data) => {
       const newCustomer = await Customer.create({
         name: data.name || '',

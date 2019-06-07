@@ -1,4 +1,56 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const {
+  NODE_ENV,
+  DEBUG,
+  DB_HOST,
+  DB_USER,
+  DB_PASS,
+  DB_PORT,
+  DB_NAME,
+  TEST_DB_HOST,
+  TEST_DB_USER,
+  TEST_DB_PASS,
+  TEST_DB_PORT,
+  TEST_DB_NAME,
+  REDIS_URL,
+  JWT_SECRET,
+  STRIPE_API_KEY,
+  PORT,
+} = process.env;
+
+export {
+  NODE_ENV,
+  DEBUG,
+  DB_HOST,
+  DB_USER,
+  DB_PASS,
+  DB_PORT,
+  DB_NAME,
+  TEST_DB_HOST,
+  TEST_DB_USER,
+  TEST_DB_PASS,
+  TEST_DB_PORT,
+  TEST_DB_NAME,
+  REDIS_URL,
+  JWT_SECRET,
+  STRIPE_API_KEY,
+  PORT,
+};
+
+export const SALT_ROUNDS = 10;
+
 export const PAGINATION_SIZE = 20;
+
+export const FIELDS_ALLOWED_ORDER = {
+  product: ['product_id', 'name', 'price'],
+};
+
+export const ORDER_VALUES_ALLOWED = ['ASC', 'DESC'];
+
+export const TOKEN_EXPIRTY_TIME = '24h';
 
 export const ERROR_CODES = {
   ATR_01: {
@@ -55,6 +107,21 @@ export const ERROR_CODES = {
     status: 400,
     code: 'ORD_04',
     message: 'No Item in the Cart',
+  },
+  ORD_05: {
+    status: 400,
+    code: 'ORD_05',
+    message: 'Don\'t exist Order with this ID',
+  },
+  ORD_06: {
+    status: 400,
+    code: 'ORD_06',
+    message: 'Payment already registered for Order',
+  },
+  ORD_07: {
+    status: 400,
+    code: 'ORD_07',
+    message: 'Failed to receive payment for Order',
   },
   PAG_01: {
     status: 400,
@@ -145,11 +212,3 @@ export const ERROR_CODES = {
     message: 'TThe [field] is longer than [max-length]'
   }
 };
-
-export const FIELDS_ALLOWED_ORDER = {
-  product: ['product_id', 'name', 'price'],
-};
-
-export const ORDER_VALUES_ALLOWED = ['ASC', 'DESC'];
-
-export const TOKEN_EXPIRTY_TIME = '24h';

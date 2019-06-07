@@ -1,9 +1,5 @@
-import dotenv from 'dotenv';
 import logger from 'src/utils/logger';
-
-dotenv.config();
-
-const {
+import {
   DB_HOST,
   DB_USER,
   DB_PASS,
@@ -15,7 +11,7 @@ const {
   TEST_DB_PORT,
   TEST_DB_NAME,
   NODE_ENV,
-} = process.env;
+} from 'src/config/constants';
 
 
 let host, user, password, port, database;

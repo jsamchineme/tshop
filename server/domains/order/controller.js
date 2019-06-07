@@ -3,7 +3,11 @@ import httpException from 'src/http/httpException';
 import {
   ERROR_CODES,
 } from 'src/config/constants';
-import { Order as OrderModel } from 'src/domains/models';
+import {
+  Order as OrderModel,
+  Customer as CustomerModel,
+} from 'src/domains/models';
+import paymentService from 'src/services/payment';
 
 /**
  * @param {Object} req - request
@@ -27,6 +31,38 @@ export const createNewOrder = async (req, res) => {
     }
     throw error;
   }
+};
+
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
+export const makeOrderPayment = async (req, res) => {
+  const { body: data } = req;
+  const { order_id: orderId } = data;
+  const { id: customerId } = req.decoded;
+
+  const order = await OrderModel.findByPk(orderId);
+
+  if (!order) {
+    throw httpException.handle(ERROR_CODES.ORD_05);
+  }
+  if (order.status === 1) {
+    throw httpException.handle(ERROR_CODES.ORD_06);
+  }
+
+  const authCustomer = await CustomerModel.getAuthUser(customerId);
+  data.receiptEmail = authCustomer.email;
+
+  const paymentResponse = await paymentService.makeOrderPayment(data);
+
+  if (paymentResponse.paid !== true) {
+    throw httpException.handle(ERROR_CODES.ORD_07);
+  }
+
+  const updatedOrder = await order.completeOrder(order);
+  return response.success(res, updatedOrder);
 };
 
 /**
