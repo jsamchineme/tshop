@@ -57,6 +57,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
+  /**
+   * Initialising the ShoppingCart Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   ShoppingCart.initialise = function (models) {
     // ShoppingCart is a collection of CartItems
     // This could rather be name CartItem
@@ -70,9 +76,14 @@ module.exports = (sequelize, DataTypes) => {
       value
     ) => ShoppingCart.scope({ method: ['byField', { field, value }] });
 
-    ShoppingCart.findProductInCart = async (data) => {
+    /**
+     * @param {Object} queryOptions - The options used for retrieving data
+     * @param {Object} queryOptions.product_id - the product id
+     * @param {Object} queryOptions.cart_id - the cart id
+     * @returns {Object} - fetched record
+     */
+    ShoppingCart.findProductInCart = async ({ product_id, cart_id }) => {
       // check that product is not already added
-      const { product_id, cart_id } = data;
       const foundProducts = await ShoppingCart.findAll({
         where: {
           product_id: { [Op.eq]: product_id },
@@ -84,6 +95,11 @@ module.exports = (sequelize, DataTypes) => {
       return foundProducts[0];
     };
 
+    /**
+     * @param {Object} queryOptions - The options used for retrieving data
+     * @param {Number} queryOptions.cartId - value of cart id
+     * @returns {Number} - total amount calculated for cart
+     */
     ShoppingCart.getTotalAmountForCart = async ({ cartId }) => {
       const rows = await ShoppingCart.findCartItems({ cartId });
       let total_amount = 0;
@@ -94,6 +110,12 @@ module.exports = (sequelize, DataTypes) => {
       return total_amount;
     };
 
+    /**
+     * @param {Object} queryOptions - The options used for retrieving data
+     * @param {Number} queryOptions.cartId - value of cart id
+     * @param {String} queryOptions.scope - example: 'savedForLater'
+     * @returns {Array} - fetched rows
+     */
     ShoppingCart.findCartItems = async ({ cartId, scope }) => {
       let rows;
       if (scope === 'savedForLater') {
@@ -117,6 +139,10 @@ module.exports = (sequelize, DataTypes) => {
       return rows;
     };
 
+    /**
+     * @param {Number} cartId - value of card id
+     * @returns {Number} - number of rows affected
+     */
     ShoppingCart.emptyCart = async (cartId) => {
       const rows = await ShoppingCart.scopeByField('cart_id', cartId).destroy();
       return rows;

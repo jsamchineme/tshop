@@ -75,6 +75,11 @@ export const ERROR_CODES = {
     status: 404,
     code: 'PRO_01'
   },
+  PRO_02: {
+    message: 'Missing search query string',
+    status: 422,
+    code: 'PRO_02'
+  },
   REV_01: {
     status: 422,
     code: 'REV_01'

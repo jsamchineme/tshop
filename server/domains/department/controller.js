@@ -1,4 +1,4 @@
-import { getQueryOptions } from 'src/services/queryOptions';
+import { getQueryOptions } from 'src/utils/queryOptions';
 import response from 'src/http/response';
 import httpException from 'src/http/httpException';
 import {
@@ -7,13 +7,22 @@ import {
 import departmentRepository from './repository';
 import departmentTransformer from './transformer';
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getAllDepartments = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const result = await departmentRepository.getAllDepartments(queryOptions);
-
   return response.success(res, result.rows);
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getSingleDepartment = async (req, res) => {
   const { departmentId } = req.params;
   const result = await departmentRepository.getSingleDepartment({

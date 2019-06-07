@@ -35,6 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'order_detail'
   });
 
-  OrderDetail.removeAttribute('id')
+  OrderDetail.removeAttribute('id');
   return OrderDetail;
 };

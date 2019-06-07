@@ -7,9 +7,7 @@ const { database, username, password } = sequelizeDatabaseConfig;
 const sequelize = new Sequelize(database, username, password, sequelizeDatabaseConfig, {
   define: {
     hooks: {
-      afterCreate: (record) => {
-        console.log(record, '>>>>>Record');
-      }
+      afterCreate: () => {}
     }
   }
 });

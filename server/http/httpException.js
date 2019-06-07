@@ -1,3 +1,6 @@
+/**
+ * Prepare the response for an http exception
+ */
 const httpException = {
   /**
    * @param {Object} error - object of http error

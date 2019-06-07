@@ -22,6 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     tableName: 'shipping'
   });
+
+  /**
+   * Initialising the Shipping Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   Shipping.initialise = function (models) {
     Shipping.belongsTo(models.ShippingRegion, {
       foreignKey: 'shipping_region_id',

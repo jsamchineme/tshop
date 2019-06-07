@@ -11,7 +11,7 @@ const categoryRepository = {
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromModel: () => CategoryModel.getAllCategoriesAndCount({ paginationMeta })
+      fetchFromDB: () => CategoryModel.getAllCategoriesAndCount({ paginationMeta })
     });
     return responseData;
   },
@@ -20,7 +20,7 @@ const categoryRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => CategoryModel.getProductCategories({ productId, throwProductNotFound })
+      fetchFromDB: () => CategoryModel.getProductCategories({ productId, throwProductNotFound })
     });
     return responseData;
   },
@@ -33,7 +33,7 @@ const categoryRepository = {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => CategoryModel.getDepartmentCategories({
+      fetchFromDB: () => CategoryModel.getDepartmentCategories({
         departmentId,
         throwDepartmentNotFound
       }),
@@ -45,7 +45,7 @@ const categoryRepository = {
     const responseData = await baseRepository.getItemData({
       domain: this.domain,
       requestURL,
-      fetchFromModel: () => CategoryModel.findByPk(categoryId)
+      fetchFromDB: () => CategoryModel.findByPk(categoryId)
     });
     return responseData;
   },

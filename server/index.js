@@ -2,8 +2,8 @@ import express from 'express';
 import morganLogger from 'morgan';
 import bodyParser from 'body-parser';
 import baseRouter from 'src/api/router';
-import logger from 'src/services/logger';
-import errorHandler from 'src/services/errorHandler';
+import logger from 'src/utils/logger';
+import errorHandler from 'src/utils/errorHandler';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -37,6 +37,7 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 8003;
 
+// starting up the server
 app.listen(port, () => logger.info(`app listening on port ${port}`));
 
 export default app;

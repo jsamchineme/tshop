@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'attribute_value'
   });
 
+  /**
+   * Initialising the AttributeValue Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   AttributeValue.initialise = function (models) {
     AttributeValue.belongsTo(models.Attribute, {
       foreignKey: 'attribute_id',

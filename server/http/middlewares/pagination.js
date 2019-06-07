@@ -1,4 +1,4 @@
-import { getOrderByData } from 'src/services/pagination';
+import { getOrderByData } from 'src/utils/pagination';
 import httpException from 'src/http/httpException';
 import {
   ERROR_CODES,

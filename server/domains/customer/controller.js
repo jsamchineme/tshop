@@ -8,6 +8,11 @@ import {
 import customerRepository from './repository';
 import customerTransformer from './transformer';
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const registerCustomer = async (req, res) => {
   const input = req.body;
   const customer = await CustomerModel.getByField('email', input.email);
@@ -27,6 +32,11 @@ export const registerCustomer = async (req, res) => {
   return response.success(res, data);
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const loginCustomer = async (req, res) => {
   const { email, password } = req.body;
   const customer = await CustomerModel.getByField('email', email);
@@ -47,21 +57,28 @@ export const loginCustomer = async (req, res) => {
     accessToken: token,
     expires_in: expiresIn,
   };
-
   return response.success(res, data);
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getCustomerById = async (req, res) => {
   const { id: customerId } = req.decoded;
-
   const customer = await customerRepository.getCustomerById(customerId);
   return response.success(res, customerTransformer.item(customer));
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const updateCustomer = async (req, res) => {
   const { id: customerId } = req.decoded;
   const data = req.body;
-
   const customer = await customerRepository.updateCustomer({ customerId, data });
   return response.success(res, customerTransformer.item(customer));
 };

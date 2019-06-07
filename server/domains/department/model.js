@@ -18,6 +18,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'department'
   });
 
+  /**
+   * Initialising the Department Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   Department.initialise = function (models) {
     Department.hasMany(models.Category, {
       foreignKey: 'category_id',

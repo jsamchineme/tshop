@@ -1,5 +1,5 @@
 import mysqlImport from 'mysql-import';
-import logger from 'src/services/logger';
+import logger from 'src/utils/logger';
 import migrationConfig from './migrationConfig';
 
 mysqlImport.config({

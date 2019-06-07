@@ -1,4 +1,4 @@
-import { getQueryOptions } from 'src/services/queryOptions';
+import { getQueryOptions } from 'src/utils/queryOptions';
 import httpException from 'src/http/httpException';
 import productTransformer from 'src/domains/product/transformer';
 import response from 'src/http/response';
@@ -8,12 +8,22 @@ import {
 import attributeRepository from './repository';
 import attributeTransformer from './transformer';
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getAllAttributes = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const result = await attributeRepository.getAllAttributes(queryOptions);
   return response.success(res, attributeTransformer.collection(result, req));
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getValuesForAttribute = async (req, res) => {
   const { attributeId } = req.params;
   const queryOptions = getQueryOptions(req);
@@ -24,6 +34,11 @@ export const getValuesForAttribute = async (req, res) => {
   return response.success(res, attributeTransformer.values.collection(result, req));
 };
 
+/**
+ * @param {Object} req - request
+ * @param {Object} res - server response
+ * @returns {Object} - server response with status code and|or body
+ */
 export const getProductAttributes = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { productId } = req.params;

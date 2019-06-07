@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'tax'
   });
 
+  /**
+   * Initialising the Tax Model
+   * adding model associations and class methods
+   * @param {Object} models - sequelize moodels
+   * @returns {void} void
+   */
   Tax.initialise = function (models) {
     Tax.getAllTaxes = async () => {
       const rows = await models.Tax.findAll();
