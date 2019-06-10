@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const {
-  NODE_ENV,
   DEBUG,
   DB_HOST,
   DB_USER,
@@ -20,6 +19,10 @@ const {
   STRIPE_API_KEY,
   PORT,
 } = process.env;
+
+const env = process.env.NODE_ENV || 'development';
+const NODE_ENV = env;
+
 
 export {
   NODE_ENV,
@@ -82,6 +85,11 @@ export const ERROR_CODES = {
     message: 'Don\'t exist cart item with this ID',
     status: 404,
     code: 'CAR_02'
+  },
+  CAR_03: {
+    message: 'Don\'t exist cart with this ID',
+    status: 404,
+    code: 'CAR_03'
   },
   DEP_01: {
     message: 'Don\'t exist department with this ID',
@@ -212,3 +220,20 @@ export const ERROR_CODES = {
     message: 'TThe [field] is longer than [max-length]'
   }
 };
+
+export const ALL_DOMAINS = [
+  'product',
+  'attribute',
+  'attributeValue',
+  'category',
+  'customer',
+  'department',
+  'order',
+  'orderDetail',
+  'product',
+  'productCategory',
+  'review',
+  'shipping',
+  'shippingRegion',
+  'shoppingCart',
+];

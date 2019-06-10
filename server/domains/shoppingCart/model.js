@@ -144,8 +144,8 @@ module.exports = (sequelize, DataTypes) => {
      * @returns {Number} - number of rows affected
      */
     ShoppingCart.emptyCart = async (cartId) => {
-      const rows = await ShoppingCart.scopeByField('cart_id', cartId).destroy();
-      return rows;
+      const rows_affected = await ShoppingCart.scopeByField('cart_id', cartId).destroy();
+      return rows_affected;
     };
   };
 

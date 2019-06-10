@@ -31,12 +31,17 @@ const productRepository = {
     return responseData;
   },
 
-  async getCategoryProducts({ requestURL, paginationMeta, categoryId }) {
+  async getCategoryProducts({
+    requestURL,
+    paginationMeta,
+    categoryId,
+    throwCategoryNotFound
+  }) {
     const responseData = await baseRepository.getCollectionData({
       domain: this.domain,
       requestURL,
       paginationMeta,
-      fetchFromDB: () => ProductModel.getCategoryProductsAndCount({ paginationMeta, categoryId })
+      fetchFromDB: () => ProductModel.getCategoryProductsAndCount({ paginationMeta, categoryId, throwCategoryNotFound })
     });
     return responseData;
   },

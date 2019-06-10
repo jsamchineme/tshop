@@ -26,12 +26,12 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token, JWT_SECRET, async (err, decoded) => {
       if (err) {
-        throw httpException.handle(ERROR_CODES.AUT_02);
+        return next(httpException.handle(ERROR_CODES.AUT_02));
       }
 
       const user = await CustomerModel.findByPk(decoded.id);
       if (!user) {
-        next(httpException.handle(ERROR_CODES.AUT_02));
+        return next(httpException.handle(ERROR_CODES.AUT_02));
       }
       req.decoded = decoded;
       next();

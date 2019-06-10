@@ -15,7 +15,9 @@ import {
 
 
 let host, user, password, port, database;
-switch (NODE_ENV) {
+const environment = NODE_ENV || 'development';
+
+switch (environment) {
   case 'test':
     host = TEST_DB_HOST;
     user = TEST_DB_USER;
@@ -39,6 +41,6 @@ const migrationConfig = {
   database,
 };
 
-logger.info(`Environment::: ${NODE_ENV}`);
+logger.info(`Environment::: ${environment}`);
 
 export default migrationConfig;

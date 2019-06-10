@@ -1,17 +1,19 @@
 import Sequelize from 'sequelize';
 import config from 'src/config/database';
+import { NODE_ENV } from 'src/config/constants';
 
-const env = process.env.NODE_ENV || 'development';
-const sequelizeDatabaseConfig = config[env];
+// set default environment to development
+const environment = NODE_ENV || 'development';
+
+const sequelizeDatabaseConfig = config[environment];
 const { database, username, password } = sequelizeDatabaseConfig;
-const sequelize = new Sequelize(database, username, password, sequelizeDatabaseConfig, {
-  define: {
-    hooks: {
-      afterCreate: () => {}
-    }
-  }
-});
 
+// setup sequelize to log queries in development environment only
+sequelizeDatabaseConfig.logging = NODE_ENV === 'development';
+
+const sequelize = new Sequelize(database, username, password, sequelizeDatabaseConfig);
+
+// import all models from their respective domains
 const db = {
   Attribute: sequelize.import('./attribute/model'),
   AttributeValue: sequelize.import('./attributeValue/model'),
@@ -30,6 +32,7 @@ const db = {
   Tax: sequelize.import('./tax/model'),
 };
 
+// initialise all models imported
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].initialise) {
     db[modelName].initialise(db);

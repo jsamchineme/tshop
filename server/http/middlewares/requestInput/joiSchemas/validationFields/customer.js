@@ -2,8 +2,8 @@ import joi from 'joi';
 import loadErrors from '../loadErrors';
 
 export const email = joi.string().strict().trim().strict()
-  .min(10)
-  .max(100)
+  .min(3)
+  .max(70)
   .email()
   .required()
   .error((errors) => {
@@ -17,7 +17,7 @@ export const password = joi.string().trim().strict()
     return loadErrors(errors);
   });
 
-export const name = joi.string().trim().min(8).max(100)
+export const name = joi.string().trim().min(8).max(60)
   .required()
   .error((errors) => {
     return loadErrors(errors);

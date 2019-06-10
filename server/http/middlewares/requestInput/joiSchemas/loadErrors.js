@@ -4,22 +4,20 @@ const fieldErrorTypeCodes = {
     'any.empty': 'USR_03',
     'string.max': 'USR_07',
     'string.min': 'USR_10',
-    'string.email': 'URS_03'
+    'string.email': 'USR_03'
   },
   password: {
     'any.required': 'USR_02',
     'any.empty': 'USR_03',
     'string.max': 'USR_07',
     'string.min': 'USR_10',
-    'string.email': 'URS_03'
+    'string.email': 'USR_03'
   },
 };
 
 const loadErrors = (errors) => {
   const { type, context } = errors[0];
   const { key: field } = context;
-
-  console.log(errors);
 
   let message;
   const status = 422;

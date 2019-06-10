@@ -1,5 +1,5 @@
 import logger from 'src/utils/logger';
-import { DEBUG } from 'src/config/constants';
+import { DEBUG, NODE_ENV } from 'src/config/constants';
 
 /**
  * Intercept all errors and handle them
@@ -15,7 +15,9 @@ import { DEBUG } from 'src/config/constants';
  * @returns {ServerResponse} - response with error code and message
  */
 const errorHandler = (err, req, res, next) => {
-  logger.info(err.stack);
+  if (NODE_ENV === 'development') {
+    logger.info(err.stack);
+  }
 
   const { response: httpErrorResponse } = err;
   let operationalErrorResponse = {
