@@ -17,6 +17,12 @@ export const password = joi.string().trim().strict()
     return loadErrors(errors);
   });
 
+export const passwordUpdate = joi.string().trim().strict()
+  .max(40)
+  .error((errors) => {
+    return loadErrors(errors);
+  });
+
 export const name = joi.string().trim().min(8).max(60)
   .required()
   .error((errors) => {
@@ -73,7 +79,6 @@ export const country = joi.string().trim().strict()
 
 export const day_phone = joi.string().trim().strict()
   .max(100)
-  .required()
   .error((errors) => {
     return loadErrors(errors);
   });

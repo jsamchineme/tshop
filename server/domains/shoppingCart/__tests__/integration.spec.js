@@ -146,7 +146,7 @@ describe('Shopping Cart Module', () => {
     });
   });
 
-  describe('PUT /shoppingcart/empty/:cartId', () => {
+  describe('DELETE /shoppingcart/empty/:cartId', () => {
     const cartItemData = {
       attributes: 'LG, Red',
       quantity: 4,
@@ -165,12 +165,12 @@ describe('Shopping Cart Module', () => {
     });
 
     it('should empty the cart', async () => {
-      const res = await request.put(`/api/shoppingcart/empty/${cartItemData.cart_id}`);
+      const res = await request.delete(`/api/shoppingcart/empty/${cartItemData.cart_id}`);
       res.status.should.be.eql(200);
     });
 
     it('should return error response, if cart is not found', async () => {
-      const res = await request.put('/api/shoppingcart/empty/abc123434');
+      const res = await request.delete('/api/shoppingcart/empty/abc123434');
       res.status.should.be.eql(404);
       res.body.should.have.property('status');
       res.body.should.have.property('code');
@@ -289,7 +289,7 @@ describe('Shopping Cart Module', () => {
     });
   });
 
-  describe('GET /shoppingcart/removeProduct/:itemId', () => {
+  describe('DELETE /shoppingcart/removeProduct/:itemId', () => {
     const cartItemData = {
       attributes: 'LG, Red',
       quantity: 4,
@@ -310,12 +310,12 @@ describe('Shopping Cart Module', () => {
     });
 
     it('should remove product from cart', async () => {
-      const res = await request.get(`/api/shoppingcart/removeProduct/${cartItemData.item_id}`);
+      const res = await request.delete(`/api/shoppingcart/removeProduct/${cartItemData.item_id}`);
       res.status.should.be.eql(200);
     });
 
     it('should return error response, if cart is not found', async () => {
-      const res = await request.get('/api/shoppingcart/removeProduct/0');
+      const res = await request.delete('/api/shoppingcart/removeProduct/0');
       res.status.should.be.eql(404);
       res.body.should.have.property('status');
       res.body.should.have.property('code');

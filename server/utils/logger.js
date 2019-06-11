@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { NODE_ENV } from 'src/config/constants';
+import { DEBUG } from 'src/config/constants';
 
 const winstonLogger = winston.createLogger({
   level: 'info',
@@ -19,7 +19,7 @@ export default {
    * @returns {void}
    */
   info(data) {
-    if (NODE_ENV === 'development') {
+    if (DEBUG === 'true') {
       winstonLogger.info(data);
     }
   },
@@ -28,7 +28,7 @@ export default {
    * @returns {void}
    */
   error(data) {
-    if (NODE_ENV === 'development') {
+    if (DEBUG === 'true') {
       winstonLogger.info(data);
     }
   }

@@ -99,6 +99,6 @@ export const getCustomerById = async (req, res) => {
 export const updateCustomer = async (req, res) => {
   const { id: customerId } = req.decoded;
   const data = req.body;
-  const customer = await customerRepository.updateCustomer({ customerId, data });
+  const customer = await CustomerModel.updateCustomer({ customerId, data });
   return response.success(res, customerTransformer.item(customer));
 };

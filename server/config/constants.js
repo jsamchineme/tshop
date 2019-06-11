@@ -63,7 +63,7 @@ export const ERROR_CODES = {
   },
   AUT_01: {
     message: 'Authorization code is empty',
-    status: 403,
+    status: 401,
     code: 'AUT_01'
   },
   AUT_02: {
