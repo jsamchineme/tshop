@@ -1,8 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-const {
+import {
   DB_HOST,
   DB_USER,
   DB_PASS,
@@ -13,7 +9,7 @@ const {
   TEST_DB_NAME,
   TEST_DB_HOST,
   TEST_DB_PORT,
-} = process.env;
+} from 'src/config/constants';
 
 module.exports = {
   development: {
@@ -40,4 +36,4 @@ module.exports = {
     port: DB_PORT,
     dialect: 'mysql'
   },
-}
+};

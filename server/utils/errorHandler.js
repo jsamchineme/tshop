@@ -1,7 +1,6 @@
-import dotenv from 'dotenv';
 import logger from 'src/utils/logger';
+import { DEBUG, NODE_ENV } from 'src/config/constants';
 
-dotenv.config();
 /**
  * Intercept all errors and handle them
  * There are two types of errors handled here
@@ -16,7 +15,9 @@ dotenv.config();
  * @returns {ServerResponse} - response with error code and message
  */
 const errorHandler = (err, req, res, next) => {
-  logger.info(err.stack);
+  if (NODE_ENV === 'development') {
+    logger.info(err.stack);
+  }
 
   const { response: httpErrorResponse } = err;
   let operationalErrorResponse = {
@@ -28,7 +29,7 @@ const errorHandler = (err, req, res, next) => {
    * Return specific error message and stack trace
    * if app is in debug mode
    */
-  if (process.env.DEBUG === 'true') {
+  if (DEBUG === 'true') {
     operationalErrorResponse = {
       ...operationalErrorResponse,
       stack: err.stack,

@@ -1,14 +1,9 @@
 import redis from 'redis';
 import bluebird from 'bluebird';
 import logger from 'src/utils/logger';
-import dotenv from 'dotenv';
+import { REDIS_URL } from 'src/config/constants';
 
-dotenv.config();
 bluebird.promisifyAll(redis);
-
-const {
-  REDIS_URL,
-} = process.env;
 
 const redisClient = redis.createClient(REDIS_URL);
 

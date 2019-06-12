@@ -27,7 +27,7 @@ const generateCustomerErrors = (error, httpException) => {
 
   const ERROR_CODE = {
     code: parsedMessageArray[0],
-    status: parsedMessageArray[1],
+    status: Number(parsedMessageArray[1]),
     message: parsedMessageArray[2],
   };
   return httpException.handle(ERROR_CODE);

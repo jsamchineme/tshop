@@ -3,7 +3,8 @@ import {
   name,
   day_phone,
   eve_phone,
-  mob_phone
+  mob_phone,
+  passwordUpdate
 } from './validationFields/customer';
 
 const schema = {
@@ -11,7 +12,8 @@ const schema = {
   name,
   day_phone,
   eve_phone,
-  mob_phone
+  mob_phone,
+  password: passwordUpdate
 };
 
 export default schema;

@@ -1,9 +1,7 @@
 import winston from 'winston';
+import { DEBUG } from 'src/config/constants';
 
-/**
- * Console logger used throughout the app
- */
-const logger = winston.createLogger({
+const winstonLogger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
   transports: [
@@ -11,4 +9,27 @@ const logger = winston.createLogger({
   ]
 });
 
-export default logger;
+/**
+ * Console logger used throughout the app
+ * @exports
+ */
+export default {
+  /**
+   * @param {*} data - the data to be logged
+   * @returns {void}
+   */
+  info(data) {
+    if (DEBUG === 'true') {
+      winstonLogger.info(data);
+    }
+  },
+  /**
+   * @param {*} data - the data to be logged
+   * @returns {void}
+   */
+  error(data) {
+    if (DEBUG === 'true') {
+      winstonLogger.info(data);
+    }
+  }
+};

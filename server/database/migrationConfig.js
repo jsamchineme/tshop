@@ -1,9 +1,5 @@
-import dotenv from 'dotenv';
 import logger from 'src/utils/logger';
-
-dotenv.config();
-
-const {
+import {
   DB_HOST,
   DB_USER,
   DB_PASS,
@@ -15,11 +11,13 @@ const {
   TEST_DB_PORT,
   TEST_DB_NAME,
   NODE_ENV,
-} = process.env;
+} from 'src/config/constants';
 
 
 let host, user, password, port, database;
-switch (NODE_ENV) {
+const environment = NODE_ENV || 'development';
+
+switch (environment) {
   case 'test':
     host = TEST_DB_HOST;
     user = TEST_DB_USER;
@@ -43,6 +41,6 @@ const migrationConfig = {
   database,
 };
 
-logger.info(`Environment::: ${NODE_ENV}`);
+logger.info(`Environment::: ${environment}`);
 
 export default migrationConfig;

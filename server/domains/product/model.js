@@ -150,9 +150,16 @@ module.exports = (sequelize, DataTypes) => {
      * @param {Object} queryOptions.categoryId - value of category id
      * @returns {Object} - fetched rows, count of all matched records in the database
      */
-    Product.getCategoryProductsAndCount = async ({ paginationMeta, categoryId }) => {
+    Product.getCategoryProductsAndCount = async ({
+      paginationMeta,
+      categoryId,
+      throwCategoryNotFound,
+    }) => {
       const { Category } = models;
       const category = await Category.findByPk(categoryId);
+      if (!category) {
+        return throwCategoryNotFound();
+      }
       const queryPaginationOptions = getDBQueryPaginationOptions(paginationMeta);
       const rows = await category.getProducts({ ...queryPaginationOptions });
       const count = await category.countProducts();

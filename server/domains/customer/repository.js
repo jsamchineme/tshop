@@ -17,11 +17,6 @@ const customerRepository = {
   async getCustomerById(customerId) {
     return CustomerModel.findByPk(customerId);
   },
-
-  async updateCustomer({ customerId, data }) {
-    const customer = await CustomerModel.findByPk(customerId);
-    return customer.update(data);
-  }
 };
 
 customerRepository.init();

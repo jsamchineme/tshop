@@ -15,7 +15,7 @@ import departmentTransformer from './transformer';
 export const getAllDepartments = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const result = await departmentRepository.getAllDepartments(queryOptions);
-  return response.success(res, result.rows);
+  return response.success(res, departmentTransformer.collection(result));
 };
 
 /**

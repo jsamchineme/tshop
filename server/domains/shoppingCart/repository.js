@@ -10,7 +10,7 @@ const shoppingCartRepository = {
   async addProducToCart({ data, cartId }) {
     const foundProduct = await ShoppingCartModel.findProductInCart(data);
     if (!foundProduct) {
-      await ShoppingCartModel.create(data);
+      await ShoppingCartModel.createCartItem(data);
     }
     const rows = await ShoppingCartModel.findCartItems({ cartId });
     return rows;

@@ -1,7 +1,7 @@
 export default {
   collection(data) {
     data.rows = data.rows.map(row => this.item(row));
-    return data;
+    return data.rows;
   },
   item(row) {
     return {

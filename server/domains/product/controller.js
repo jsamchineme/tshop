@@ -45,6 +45,7 @@ export const getCategoryProducts = async (req, res) => {
   const queryOptions = getQueryOptions(req);
   const { categoryId } = req.params;
   queryOptions.categoryId = categoryId;
+  queryOptions.throwCategoryNotFound = () => { throw httpException.handle(ERROR_CODES.CAT_01); };
 
   const result = await productRepository.getCategoryProducts(queryOptions);
   const responseData = productTransformer.collection(result, req);
@@ -91,13 +92,16 @@ export const getSingleProduct = async (req, res) => {
  * @returns {Object} - server response with status code and|or body
  */
 export const getProductDetails = async (req, res) => {
-  const queryOptions = getQueryOptions(req);
   const { productId } = req.params;
-  queryOptions.productId = productId;
-  queryOptions.throwProductNotFound = () => { throw httpException.handle(ERROR_CODES.PRO_01); };
-  let result = await productRepository.getProductDetails(queryOptions);
-  result = productTransformer.attributeValues.collection(result, req);
-  return response.success(res, result.rows);
+  const result = await productRepository.getSingleProduct({
+    productId,
+    requestURL: req.url
+  });
+  if (result === null || result === undefined) {
+    throw httpException.handle(ERROR_CODES.PRO_01);
+  }
+  const responseData = productTransformer.item(result, req);
+  return response.success(res, responseData);
 };
 
 /**

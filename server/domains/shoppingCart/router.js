@@ -28,7 +28,7 @@ cartRouter.get('/shoppingcart/:cartId',
 cartRouter.put('/shoppingcart/update/:itemId',
   wrapAsync(updateCartItem));
 
-cartRouter.put('/shoppingcart/empty/:cartId',
+cartRouter.delete('/shoppingcart/empty/:cartId',
   wrapAsync(clearCartItems));
 
 cartRouter.get('/shoppingcart/totalAmount/:cartId',
@@ -40,7 +40,7 @@ cartRouter.get('/shoppingcart/saveForLater/:itemId',
 cartRouter.get('/shoppingcart/getSaved/:cartId',
   wrapAsync(getItemsSavedForLater));
 
-cartRouter.get('/shoppingcart/removeProduct/:itemId',
+cartRouter.delete('/shoppingcart/removeProduct/:itemId',
   wrapAsync(removeItemFromCart));
 
 export default cartRouter;

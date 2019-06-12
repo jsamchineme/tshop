@@ -105,6 +105,29 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, customer.password);
     };
 
+    Customer.getAuthUser = async (customerId) => {
+      const result = await Customer.findByPk(customerId);
+      return result;
+    };
+
+    /**
+     * This finds or creates a customer from facebook
+     * @param {Object} data - data sent from facebook
+     * @returns {SequelizeInstance} - new or existing customer
+     */
+    Customer.storeFacebookUser = async (data) => {
+      let customer = await Customer.getByField('email', data.email);
+      if (!customer) {
+        customer = await Customer.createCustomer(data);
+      }
+      return customer;
+    };
+
+    /**
+     * This creates a customer
+     * @param {Object} data - data sent from request
+     * @returns {SequelizeInstance} - new customer record
+     */
     Customer.createCustomer = async (data) => {
       const newCustomer = await Customer.create({
         name: data.name || '',
@@ -122,6 +145,40 @@ module.exports = (sequelize, DataTypes) => {
         eve_phone: data.eve_phone || '',
         mob_phone: data.mob_phone || '',
       });
+      return newCustomer;
+    };
+
+    /**
+     * This updates a customer
+     * @param {Object} options - the options used to perform the action
+     * @param {Number} options.customerId - the id of the customer
+     * @param {Object} options.data - data sent from request
+     * @returns {SequelizeInstance} - updated customer
+     */
+    Customer.updateCustomer = async ({ customerId, data }) => {
+      const customer = await Customer.findByPk(customerId);
+
+      const updateData = {
+        name: data.name || customer.name,
+        email: data.email || customer.email,
+        credit_card: data.credit_card || customer.credit_card,
+        address_1: data.address_1 || customer.address_1,
+        address_2: data.address_2 || customer.address_2,
+        city: data.city || customer.city,
+        region: data.region || customer.region,
+        postal_code: data.postal_code || customer.postal_code,
+        country: data.country || customer.country,
+        shipping_region_id: data.shipping_region_id || 0,
+        day_phone: data.day_phone || customer.day_phone,
+        eve_phone: data.eve_phone || customer.eve_phone,
+        mob_phone: data.mob_phone || customer.mob_phone,
+      };
+
+      if (data.password) {
+        updateData.password = hashPassword(data.password);
+      }
+
+      const newCustomer = await customer.update(updateData);
       return newCustomer;
     };
   };

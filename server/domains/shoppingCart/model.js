@@ -77,6 +77,22 @@ module.exports = (sequelize, DataTypes) => {
     ) => ShoppingCart.scope({ method: ['byField', { field, value }] });
 
     /**
+     * @param {Object} data - The object of data to be inserted
+     * @returns {Object} - created record
+     */
+    ShoppingCart.createCartItem = async (data) => {
+      const newItem = await ShoppingCart.create({
+        product_id: data.product_id,
+        cart_id: data.cart_id,
+        attributes: data.attributes,
+        quantity: data.quantity || 1,
+        buy_now: true,
+      });
+
+      return newItem;
+    };
+
+    /**
      * @param {Object} queryOptions - The options used for retrieving data
      * @param {Object} queryOptions.product_id - the product id
      * @param {Object} queryOptions.cart_id - the cart id
@@ -144,8 +160,8 @@ module.exports = (sequelize, DataTypes) => {
      * @returns {Number} - number of rows affected
      */
     ShoppingCart.emptyCart = async (cartId) => {
-      const rows = await ShoppingCart.scopeByField('cart_id', cartId).destroy();
-      return rows;
+      const rows_affected = await ShoppingCart.scopeByField('cart_id', cartId).destroy();
+      return rows_affected;
     };
   };
 

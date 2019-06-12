@@ -9,7 +9,6 @@ import {
   getSingleProduct,
   getCategoryProducts,
   getDepartmentProducts,
-  getProductDetails,
   getProductLocations,
   getProductReviews,
   createProductReview,
@@ -39,7 +38,7 @@ productRouter.get('/products/inDepartment/:departmentId',
   wrapAsync(getDepartmentProducts));
 
 productRouter.get('/products/:productId/details',
-  wrapAsync(getProductDetails));
+  wrapAsync(getSingleProduct));
 
 productRouter.get('/products/:productId/locations',
   wrapAsync(getProductLocations));

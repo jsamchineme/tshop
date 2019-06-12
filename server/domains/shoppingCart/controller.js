@@ -29,8 +29,7 @@ export const generateUniqueId = async (req, res) => {
 export const addProducToCart = async (req, res) => {
   const { cart_id: cartId } = req.body;
   const rows = await shoppingCartRepository.addProducToCart({ data: req.body, cartId });
-  const responseData = shoppingCartTransformer.collection({ rows });
-  return response.success(res, responseData.rows);
+  return response.success(res, shoppingCartTransformer.collection({ rows }));
 };
 
 /**
@@ -41,8 +40,10 @@ export const addProducToCart = async (req, res) => {
 export const getCartProducts = async (req, res) => {
   const { cartId } = req.params;
   const rows = await shoppingCartRepository.getCartProducts({ cartId });
-  const responseData = shoppingCartTransformer.collection({ rows });
-  return response.success(res, responseData.rows);
+  if (!rows.length) {
+    throw httpException.handle(ERROR_CODES.CAR_03);
+  }
+  return response.success(res, shoppingCartTransformer.collection({ rows }));
 };
 
 /**
@@ -71,7 +72,12 @@ export const updateCartItem = async (req, res) => {
  */
 export const clearCartItems = async (req, res) => {
   const { cartId } = req.params;
-  await ShoppingCartModel.emptyCart(cartId);
+
+  const deleted = await ShoppingCartModel.emptyCart(cartId);
+  if (deleted < 1) {
+    throw httpException.handle(ERROR_CODES.CAR_03);
+  }
+
   return response.success(res);
 };
 
@@ -83,6 +89,9 @@ export const clearCartItems = async (req, res) => {
 export const getTotalAmountForCart = async (req, res) => {
   const { cartId } = req.params;
   const total_amount = await ShoppingCartModel.getTotalAmountForCart({ cartId });
+  if (!total_amount) {
+    throw httpException.handle(ERROR_CODES.CAR_03);
+  }
   return response.success(res, { total_amount });
 };
 
@@ -109,8 +118,10 @@ export const saveItemForLater = async (req, res) => {
 export const getItemsSavedForLater = async (req, res) => {
   const { cartId } = req.params;
   const rows = await shoppingCartRepository.getCartProducts({ cartId, scope: 'savedForLater' });
-  const responseData = shoppingCartTransformer.collection({ rows });
-  return response.success(res, responseData.rows);
+  if (!rows.length) {
+    throw httpException.handle(ERROR_CODES.CAR_03);
+  }
+  return response.success(res, shoppingCartTransformer.collection({ rows }));
 };
 
 /**

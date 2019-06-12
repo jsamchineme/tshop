@@ -65,7 +65,7 @@ export const getSingleCategory = async (req, res) => {
   });
 
   if (result === null || result === undefined) {
-    throw httpException.handle(ERROR_CODES.PRO_01);
+    throw httpException.handle(ERROR_CODES.CAT_01);
   }
 
   const responseData = categoryTransformer.item(result, req);

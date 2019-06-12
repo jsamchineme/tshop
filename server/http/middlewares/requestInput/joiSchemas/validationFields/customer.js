@@ -2,8 +2,8 @@ import joi from 'joi';
 import loadErrors from '../loadErrors';
 
 export const email = joi.string().strict().trim().strict()
-  .min(10)
-  .max(100)
+  .min(3)
+  .max(70)
   .email()
   .required()
   .error((errors) => {
@@ -17,7 +17,13 @@ export const password = joi.string().trim().strict()
     return loadErrors(errors);
   });
 
-export const name = joi.string().trim().min(8).max(100)
+export const passwordUpdate = joi.string().trim().strict()
+  .max(40)
+  .error((errors) => {
+    return loadErrors(errors);
+  });
+
+export const name = joi.string().trim().min(8).max(60)
   .required()
   .error((errors) => {
     return loadErrors(errors);
@@ -73,7 +79,6 @@ export const country = joi.string().trim().strict()
 
 export const day_phone = joi.string().trim().strict()
   .max(100)
-  .required()
   .error((errors) => {
     return loadErrors(errors);
   });
@@ -86,6 +91,12 @@ export const eve_phone = joi.string().trim().strict()
 
 export const mob_phone = joi.string().trim().strict()
   .max(100)
+  .error((errors) => {
+    return loadErrors(errors);
+  });
+
+export const access_token = joi.string().trim().strict()
+  .required()
   .error((errors) => {
     return loadErrors(errors);
   });

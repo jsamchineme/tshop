@@ -20,6 +20,7 @@ export default {
   }) {
     const key = `domain:${domain}://${requestURL}`;
     const dataStringRetrieved = await redisClient.getAsync(key);
+    this.domain = domain;
 
     let responseData;
     if (dataStringRetrieved === null) {
@@ -59,7 +60,9 @@ export default {
     let responseData;
     if (dataStringRetrieved === null) {
       responseData = await fetchFromDB();
-      this.storeOnRedis(responseData);
+      if (responseData !== null) {
+        this.storeOnRedis(key, responseData);
+      }
     } else {
       responseData = JSON.parse(dataStringRetrieved);
     }
@@ -74,7 +77,11 @@ export default {
    * @returns {void}
    */
   async storeOnRedis(key, data) {
+    if (data.toJSON !== undefined) {
+      data = data.toJSON();
+    }
     await redisClient.setAsync(key, JSON.stringify(data));
+    logger.info(`redis cache set for key:${key}`);
   },
 
   /**
