@@ -1,7 +1,7 @@
 import mysqlImport from 'mysql-import';
 import logger from 'src/utils/logger';
 import { ALL_DOMAINS } from 'config/constants';
-import baseRepository from 'domains/baseRepository';
+import baseRepository from 'src/domains/baseRepository';
 import migrationConfig from '../migrationConfig';
 
 // setup mysql tables

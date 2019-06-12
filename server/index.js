@@ -1,3 +1,4 @@
+import 'newrelic';
 import http from 'http';
 import logger from 'src/utils/logger';
 import { PORT } from 'src/config/constants';

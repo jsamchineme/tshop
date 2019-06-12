@@ -18,10 +18,11 @@ const {
   JWT_SECRET,
   STRIPE_API_KEY,
   PORT,
+  NEW_RELIC_LICENCE_KEY,
 } = process.env;
 
-const env = process.env.NODE_ENV || 'development';
-const NODE_ENV = env;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const CACHE_ENABLED = process.env.CACHE_ENABLED === 'true';
 
 
 export {
@@ -41,6 +42,8 @@ export {
   JWT_SECRET,
   STRIPE_API_KEY,
   PORT,
+  CACHE_ENABLED,
+  NEW_RELIC_LICENCE_KEY
 };
 
 export const SALT_ROUNDS = 10;

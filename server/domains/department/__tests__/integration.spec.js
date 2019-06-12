@@ -3,7 +3,7 @@ import {
 } from 'mocha';
 import chai from 'chai';
 import supertest from 'supertest';
-import app from 'src';
+import app from 'src/app';
 
 const request = supertest(app);
 
