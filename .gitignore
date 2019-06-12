@@ -57,6 +57,7 @@ typings/
 
 # dotenv environment variables file
 .env
+newrelic_agent.log
 
 # next.js build output
 .next
