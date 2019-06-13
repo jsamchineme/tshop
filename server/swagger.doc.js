@@ -3,7 +3,7 @@ module.exports = {
   info: {
     version: '1.0.0',
     title: 'Turing E-Commerce API',
-    description: 'Official documentation about Turing E-commerce API.',
+    description: 'API Documentation for the Turing E-commerce API challenge.',
     header: 'none'
   },
   host: 'turing-tshirtshop.herokuapp.com',
