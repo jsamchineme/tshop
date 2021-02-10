@@ -6,6 +6,9 @@
 ## Overview
 Turing E-commerce is an ecommerce application that lets users shop for clothings and wears of asorted brands types. They allow shipping to many parts of the world. 
 
+## API Documentation
+https://turing-tshirtshop.herokuapp.com/docs/
+
 The development of this API took into account the several specific needs of the product. It is carefully crafted as one that can easily require updates and new features, taking into account the need for scalability, easy maintainance, performance and security.
 
 ## Project Architecture
